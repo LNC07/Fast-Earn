@@ -1,4 +1,3 @@
-// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyB3-ClSSDlKoVANTJOAYcnB3SZpEXjIBDE",
   authDomain: "fast-earn-5a485.firebaseapp.com",
@@ -9,5 +8,4 @@ const firebaseConfig = {
   measurementId: "G-VD8Q9CE9NX"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
