@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Fast Earning</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <h1>Welcome, <span id="userName"></span></h1>
+    <p>Coin Balance: <span id="coinBalance">0</span></p>
+    
+    <div class="actions">
+      <button id="taskBtn">Task</button>
+      <button id="addTaskBtn">Add Task</button>
+      <button id="withdrawBtn">Withdraw</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    // Firebase Authentication and Firestore
+    const auth = firebase.auth();
+    const firestore = firebase.firestore();
+
+    // Get current user
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        document.getElementById('userName').textContent = user.displayName;
+        // Check the user's coin balance from Firestore
+        firestore.collection('users').doc(user.uid).get().then(doc => {
+          if (doc.exists) {
+            document.getElementById('coinBalance').textContent = doc.data().coins;
+          }
+        });
+      } else {
+        window.location.href = 'index.html'; // Redirect to login if no user is logged in
+      }
+    });
+
+    // Add task functionality (Temporary)
+    document.getElementById('taskBtn').addEventListener('click', () => {
+      alert('Task completed! You earned coins.');
+    });
+
+    // Add Task (Admin) functionality (Temporary)
+    document.getElementById('addTaskBtn').addEventListener('click', () => {
+      alert('Admin can add a task here.');
+    });
+
+    // Withdraw functionality (Temporary)
+    document.getElementById('withdrawBtn').addEventListener('click', () => {
+      alert('Withdraw feature: Payeer request here.');
+    });
+  </script>
+</body>
+</html>
