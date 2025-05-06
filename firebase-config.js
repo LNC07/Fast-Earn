@@ -1,4 +1,4 @@
-// firebase-config.js
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyB3-ClSSDlKoVANTJOAYcnB3SZpEXjIBDE",
   authDomain: "fast-earn-5a485.firebaseapp.com",
@@ -11,4 +11,3 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
