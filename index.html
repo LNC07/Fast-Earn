@@ -1,18 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fast Earning - Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Fast Earning</h1>
-  <button id="googleSignInBtn">Sign In with Google</button>
+  <div class="login-container">
+    <h1>Fast Earning</h1>
+    <button id="googleLogin">Sign In with Google</button>
+  </div>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-
-  <!-- Main Script -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
   <script src="firebase-config.js"></script>
-  <script src="login.js"></script>
+  <script>
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    document.getElementById('googleLogin').addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          const userRef = db.collection('users').doc(user.uid);
+
+          userRef.get().then(doc => {
+            if (!doc.exists) {
+              userRef.set({
+                name: user.displayName,
+                email: user.email,
+                coins: 0
+              });
+            }
+            window.location.href = "dashboard.html";
+          });
+        })
+        .catch(error => {
+          alert("Login Failed: " + error.message);
+        });
+    });
+  </script>
 </body>
 </html>
